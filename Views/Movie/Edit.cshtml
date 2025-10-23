@@ -1,0 +1,27 @@
+@model WebApplication1.Models.Movie
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="border rounded px-2 py-1" />
+    </div>
+
+    <div>
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" class="border rounded px-2 py-1" />
+    </div>
+
+    <div>
+        <label>Genre</label>
+        <select asp-for="GenreId" asp-items="@(ViewData["Genres"] as SelectList)" class="border rounded px-2 py-1">
+    <option value="">-- Select Genre --</option>
+</select>
+
+    </div>
+
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Save</button>
+</form>
