@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using X.PagedList;
+using WebApplication1.Helpers; 
+using Microsoft.EntityFrameworkCore;
 
 namespace AspCoreFirstApp2526.Controllers
 {
@@ -14,16 +15,20 @@ namespace AspCoreFirstApp2526.Controllers
             _db = db;
         }
 
-       public IActionResult Index(int? page)
-{
-    int pageNumber = page ?? 1;
-    int pageSize = 10;
+public async Task<IActionResult> Index(int? page)
+    {
+        int pageSize = 5; // Nombre de movies par page
+        int pageNumber = page ?? 1;
 
-    var movies = _db.Movies.OrderBy(m => m.Name); 
-IPagedList<Movie> pagedMovies = new PagedList<Movie>(movies, pageNumber, pageSize);
+        var moviesQuery = _db.Movies
+            .Include(m => m.Genre)
+            .OrderBy(m => m.Id)
+            .AsNoTracking();
 
-            return View(pagedMovies);
-}
+        var movies = await PaginatedList<Movie>.CreateAsync(moviesQuery, pageNumber, pageSize);
+
+        return View(movies);
+    }
         public IActionResult ByRelease(int year, int month)
         {
             return Content($"Movies released in {month}/{year}");

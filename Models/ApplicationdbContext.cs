@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Data;
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -17,7 +18,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Movie>()
             .HasOne(m => m.Genre)
             .WithMany(g => g.Movies)
-            .HasForeignKey(m => m.Id)
+          .HasForeignKey(m => m.GenreId)
             .OnDelete(DeleteBehavior.Cascade); 
+        DbSeeder.Seed(modelBuilder);
+
     }
 }
