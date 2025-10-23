@@ -19,7 +19,6 @@
                 @foreach (var movie in Model)
                 {
                     <tr class="hover:bg-indigo-50">
-                    
                         <td class="px-4 py-3 text-center">@movie.Name</td>
                         <td class="px-4 py-3 text-center">@movie.Genre?.Name</td>
                         <td class="px-4 py-3 text-center">
@@ -39,48 +38,37 @@
     </div>
 
     <!-- Pagination -->
-    <div class="mt-6 w-full max-w-4xl mx-auto flex justify-end flex-wrap">
-        <ul class="inline-flex space-x-1 sm:space-x-2 flex-wrap justify-end">
-            @if (Model.HasPreviousPage)
-            {
-                <li>
-                    <a href="@Url.Action("Index", new { page = Model.PageIndex - 1 })" class="btn-page">Précédent</a>
-                </li>
-            }
-
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li>
-                    <a href="@Url.Action("Index", new { page = i })" class="btn-page @(i == Model.PageIndex ? "active-page" : "")">@i</a>
-                </li>
-            }
-
-            @if (Model.HasNextPage)
-            {
-                <li>
-                    <a href="@Url.Action("Index", new { page = Model.PageIndex + 1 })" class="btn-page">Suivant</a>
-                </li>
-            }
-        </ul>
+    <div class="mt-6 w-full max-w-4xl mx-auto flex justify-end space-x-2">
+        @if (Model.HasPreviousPage)
+        {
+            <a href="@Url.Action("Index", new { page = Model.PageIndex - 1 })" class="btn-page">Précédent</a>
+        }
+        @if (Model.HasNextPage)
+        {
+            <a href="@Url.Action("Index", new { page = Model.PageIndex + 1 })" class="btn-page">Suivant</a>
+        }
     </div>
 </div>
 
 <style>
 /* Images */
-.image-movie { width: 5rem; height: 6rem }
+.image-movie { width: 5rem; height: 6rem; object-fit: cover; }
+
 /* Actions */
 .btn-edit { padding: 5px 10px; border-radius: 5px; background-color: #5d57cf; color: white; text-decoration: none; font-size: 0.85rem; }
+.btn-edit:hover { background-color: #4b46b5; }
 
 .btn-delete { padding: 5px 10px; border-radius: 5px; background-color: #dc5c5c; color: white; text-decoration: none; font-size: 0.85rem; }
+.btn-delete:hover { background-color: #b94646; }
 
 .btn-details { padding: 5px 10px; border-radius: 5px; background-color: #57e88c; color: white; text-decoration: none; font-size: 0.85rem; }
+.btn-details:hover { background-color: #3fc367; }
 
 /* Pagination */
 .btn-page { padding: 5px 10px; border-radius: 5px; background-color: #e5e7eb; color: #374151; text-decoration: none; font-weight: 500; }
-.active-page { background-color: #4f46e5; color: white; }
+.btn-page:hover { background-color: #d1d5db; }
 
 /* Table */
 .table-custom th, .table-custom td { text-align: center; vertical-align: middle; }
 
-}
 </style>

@@ -17,7 +17,7 @@ namespace AspCoreFirstApp2526.Controllers
 
 public async Task<IActionResult> Index(int? page)
     {
-        int pageSize = 5; // Nombre de movies par page
+        int pageSize = 5; 
         int pageNumber = page ?? 1;
 
         var moviesQuery = _db.Movies
@@ -34,13 +34,15 @@ public async Task<IActionResult> Index(int? page)
             return Content($"Movies released in {month}/{year}");
         }
 
-        public IActionResult Details()
-        {
-            var movies = _db.Movies.ToList();
-            Customer c = new Customer(1, "mohamedAli");
-            MovietabViewModel movietabViewModel = new MovietabViewModel(movies, c);
-            return View(movietabViewModel);
-        }
+        public IActionResult Details(int id)
+{
+    var movie = _db.Movies.Include(m => m.Genre).FirstOrDefault(m => m.Id == id);
+    if (movie == null)
+        return NotFound();
+
+    return View(movie);
+}
+
 
         // GET: Edit
         public IActionResult Edit(int id)

@@ -1,0 +1,36 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApplication1.Models.Movie
+
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-10 px-4">
+    <div class="w-full max-w-2xl bg-white rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Movie Details</h2>
+
+        <div class="flex flex-col sm:flex-row items-center gap-6 justify-center">
+            <!-- Movie Image -->
+            <div class="flex-shrink-0">
+                <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/placeholder.png" : Model.ImageUrl)" 
+                     alt="@Model.Name" 
+                     class="w-30 h-30 object-cover rounded-md border border-gray-300" />
+            </div>
+
+            <!-- Movie Information -->
+            <div class="flex-1 space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700">Name</h3>
+                    <p class="text-gray-600">@Model.Name</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700">Genre</h3>
+                    <p class="text-gray-600">@Model.Genre?.Name</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-8 flex justify-end space-x-4">
+            <a asp-action="Index" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition">Back</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">Edit</a>
+        </div>
+    </div>
+</div>
