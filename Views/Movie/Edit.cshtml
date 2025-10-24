@@ -1,18 +1,18 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebApplication1.Models.Movie
 
-<div class="min-h-screen bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center py-12 px-6">
-    <div class="w-full max-w-5xl bg-white rounded-xl p-10 border border-gray-200">
+<div class="min-h-screen bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center justify-start py-12 px-6">
+    <div class="w-full max-w-6xl bg-white rounded-xl p-10 border border-gray-200">
         <h2 class="text-4xl font-bold text-center text-indigo-700 mb-10">🎬 Edit Movie</h2>
 
-        <form asp-action="Edit" asp-controller="Movie" method="post" enctype="multipart/form-data" class="flex flex-col md:flex-row gap-10 items-center">
+        <form asp-action="Edit" asp-controller="Movie" method="post" enctype="multipart/form-data" class="flex flex-col lg:flex-row gap-10 items-start">
             <input type="hidden" asp-for="Id" />
 
             <!-- Left side: current image -->
             <div class="flex-shrink-0">
                 <img src="@(!string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/images/placeholder.png")" 
                      alt="@Model.Name" 
-                     class="w-48 h-64 object-cover rounded-lg border border-gray-300" />
+                     class="w-64 h-80 object-cover rounded-lg border border-gray-300 shadow" />
             </div>
 
             <!-- Right side: form inputs -->
@@ -21,7 +21,7 @@
                 <div>
                     <label asp-for="Name" class="block text-gray-700 font-semibold mb-2">Movie Name</label>
                     <input asp-for="Name" 
-                           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+                           class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
                     <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
                 </div>
 
@@ -29,7 +29,7 @@
                 <div>
                     <label asp-for="GenreId" class="block text-gray-700 font-semibold mb-2">Genre</label>
                     <select asp-for="GenreId" asp-items="ViewBag.Genres" 
-                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-indigo-400 transition">
                         <option value="">-- Select Genre --</option>
                     </select>
                     <span asp-validation-for="GenreId" class="text-red-500 text-sm"></span>
@@ -39,17 +39,17 @@
                 <div>
                     <label class="block text-gray-700 font-semibold mb-2">Upload New Image</label>
                     <input type="file" name="ImageFile" 
-                           class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+                           class="border border-gray-300 rounded-md px-3 py-2 w-full  focus:ring-2 focus:ring-indigo-400 transition" />
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex justify-start space-x-4 pt-6">
+                <div class="flex flex-col sm:flex-row justify-start gap-4 pt-6">
                     <a asp-action="Index" 
-                       class="px-5 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition font-medium">
+                       class="px-6 py-3 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition font-medium text-center">
                         Cancel
                     </a>
                     <button type="submit" 
-                            class="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition font-medium">
+                            class="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition font-medium text-center">
                         Save Changes
                     </button>
                 </div>
@@ -61,3 +61,13 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+/* Inputs */
+input, select { font-size: 1rem; }
+
+/* Buttons */
+a, button { min-width: 120px; text-align: center; }
+
+
+</style>

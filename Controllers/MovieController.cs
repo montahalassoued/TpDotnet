@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.Helpers; 
 using Microsoft.EntityFrameworkCore;
 
-namespace AspCoreFirstApp2526.Controllers
+namespace WebApplication1.Controllers
 {
     public class MovieController : Controller
     {

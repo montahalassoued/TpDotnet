@@ -8,6 +8,7 @@ namespace WebApplication1.Models
         public string? ImageUrl { get; set; }
         public int GenreId { get; set; }
         public Genre? Genre { get; set; }
+        public List<Customer>? Customers { get; set; }
 
     }
 }

@@ -5,12 +5,10 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        // Constructeur
-        public Customer(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        // Relation 1 - Many avec MembershipType
+        public int MembershipTypeId { get; set; }
+        public MembershipType? MembershipType { get; set; }
+        public List<Movie>? Movies { get; set; }
     }
 }
 

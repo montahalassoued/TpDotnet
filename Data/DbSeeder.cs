@@ -28,6 +28,21 @@ namespace WebApplication1.Data
                 new Movie { Id = 9, Name = "Avengers: Endgame", ImageUrl = "/images/endgame.jpeg", GenreId = 4 },
                 new Movie { Id = 10, Name = "Jumanji", ImageUrl = "/images/jumanji.jpeg", GenreId = 2 }
             );
+            //Seed MembershipTypes
+            modelBuilder.Entity<MembershipType>().HasData(
+                new MembershipType { Id = 1, SignUpFee = 0, DurationInMonth = "1 Month", DiscountRate = 0 },
+                new MembershipType { Id = 2, SignUpFee = 30, DurationInMonth = "3 Months", DiscountRate = 10 },
+                new MembershipType { Id = 3, SignUpFee = 90, DurationInMonth = "6 Months", DiscountRate = 15 },
+                new MembershipType { Id = 4, SignUpFee = 150, DurationInMonth = "1 Year", DiscountRate = 25 }
+            );
+            // Seed Customers
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer { Id = 1, Name = "Alice Dupont", MembershipTypeId = 1 },
+                new Customer { Id = 2, Name = "Karim Ben Ali", MembershipTypeId = 2 },
+                new Customer { Id = 3, Name = "Sophie Martin", MembershipTypeId = 3 },
+                new Customer { Id = 4, Name = "Amine Trabelsi", MembershipTypeId = 4 },
+                new Customer { Id = 5, Name = "Lina Haddad", MembershipTypeId = 2 }
+            );
         }
     }
 }

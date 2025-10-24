@@ -1,0 +1,70 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApplication1.Helpers.PaginatedList<WebApplication1.Models.Customer>
+
+<div class="flex flex-col items-center justify-start mt-8 px-4 bg-gray-50 min-h-screen">
+    <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center w-full">Customers</h2>
+
+    <!-- Create Button -->
+    <div class="w-full mb-4 flex justify-end px-4">
+        <a href="@Url.Action("Create", "Customer")" class="btn-create">+ Create New Customer</a>
+    </div>
+
+    <!-- Table Container -->
+    <div class="overflow-x-auto w-full px-4">
+        <table class="w-full border border-gray-400 divide-y divide-gray-400 table-custom">
+            <thead class="bg-indigo-200 text-indigo-900">
+                <tr>
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Membership Type</th>
+                    <th class="px-6 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @foreach (var customer in Model)
+                {
+                    <tr class="hover:bg-indigo-50">
+                        <td class="px-6 py-3 text-center">@customer.Name</td>
+                        <td class="px-6 py-3 text-center">@customer.MembershipType?.DurationInMonth</td>
+                        <td class="px-6 py-3 text-center flex flex-col sm:flex-row sm:justify-center items-center space-x-1">
+                            <a href="@Url.Action("Edit", "Customer", new { id = customer.Id })" class="btn-edit mb-1 sm:mb-0">Edit</a>
+                            <a href="@Url.Action("Delete", "Customer", new { id = customer.Id })" class="btn-delete mb-1 sm:mb-0">Delete</a>
+                            <a href="@Url.Action("Details", "Customer", new { id = customer.Id })" class="btn-details mb-1 sm:mb-0">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 w-full flex justify-center space-x-2 px-4">
+        @if (Model.HasPreviousPage)
+        {
+            <a href="@Url.Action("Index", new { page = Model.PageIndex - 1 })" class="btn-page">Previous</a>
+        }
+        @if (Model.HasNextPage)
+        {
+            <a href="@Url.Action("Index", new { page = Model.PageIndex + 1 })" class="btn-page">Next</a>
+        }
+    </div>
+</div>
+
+<style>
+/* Buttons */
+.btn-create { padding: 8px 14px; border-radius: 6px; background-color: #10b981; color: white; font-weight: 600; text-decoration: none; }
+.btn-edit { padding: 6px 12px; border-radius: 5px; background-color: #6a64cd; color: white; text-decoration: none; font-size: 0.85rem; }
+.btn-delete { padding: 6px 12px; border-radius: 5px; background-color: #e67777; color: white; text-decoration: none; font-size: 0.85rem; }
+.btn-details { padding: 6px 12px; border-radius: 5px; background-color: #5688d8; color: white; text-decoration: none; font-size: 0.85rem; }
+.btn-page { padding: 5px 10px; border-radius: 5px; background-color: #e5e7eb; color: #374151; text-decoration: none; font-weight: 500; }
+
+/* Table */
+.table-custom { width: 100%; border-collapse: collapse; }
+.table-custom th, .table-custom td { text-align: center; vertical-align: middle; padding: 12px; }
+
+/* Hover Effects */
+.btn-edit:hover { background-color: #504eb5; }
+.btn-delete:hover { background-color: #a94444; }
+.btn-details:hover { background-color: #2563eb; }
+.btn-create:hover { background-color: #059669; }
+.btn-page:hover { background-color: #d1d5db; }
+</style>
