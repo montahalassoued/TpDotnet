@@ -114,26 +114,34 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
 
     public IActionResult Create()
         {
-            ViewData["MembershipTypeId"] = new SelectList(_db.MembershipTypes, "Id", "DurationInMonth");
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-    public IActionResult Create(Customer customer)
-        {
-        if (ModelState.IsValid)
-            {
-                _db.Customers.Add(customer);
-                _db.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
+            ViewBag.MembershipTypes = new SelectList(_db.MembershipTypes, "Id", "DurationInMonth");
+    return View();
+}
+   [HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Create(Customer customer)
+{
+    if (ModelState.IsValid)
+    {
+        _db.Customers.Add(customer);
+        _db.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
 
-        ViewBag.MembershipTypes = new SelectList(_db.MembershipTypes, "Id", "Name", customer.MembershipTypeId);
-            return View(customer);
-        }
+    // 
+    ViewBag.Errors = ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage)
+                                .ToList();
+
+    // Recréer le dropdown
+    ViewBag.MembershipTypes = new SelectList(_db.MembershipTypes, "Id", "DurationInMonth", customer.MembershipTypeId);
+    return View(customer);
+}
+
     }
 }
+

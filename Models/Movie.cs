@@ -9,6 +9,7 @@ namespace WebApplication1.Models
         public int GenreId { get; set; }
         public Genre? Genre { get; set; }
         public List<Customer>? Customers { get; set; }
-
+        public string? ImageFile { get; set; }
+        public DateTime? DateAjoutMovie { get; set; }
     }
 }

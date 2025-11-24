@@ -3,16 +3,19 @@ using WebApplication1.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.Helpers; 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApplication1.Controllers
 {
     public class MovieController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MovieController(ApplicationDbContext db)
+        public MovieController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 public async Task<IActionResult> Index(int? page)
@@ -88,5 +91,46 @@ public async Task<IActionResult> Index(int? page)
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        // GET: Movie/Create
+public IActionResult Create()
+{
+    return View();
+}
+
+        [HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Create(MovieVM model, IFormFile photo)
+{
+if (photo == null)
+return Content("File not uploaded");
+try
+{
+//Combine trois chaînes dans un seul path
+var path = Path.Combine(_webHostEnvironment.WebRootPath, "images",
+photo.FileName);
+//fournit un stream pour la lecture et ecriture dans un fichier
+using (FileStream stream = new FileStream(path, FileMode.Create))
+{
+photo.CopyTo(stream);
+stream.Close();
+}
+model.movie.ImageFile = photo.FileName;
+//Mapping entre Model et ViewModel
+var movie = new Movie
+{
+Name = model.movie.Name,
+DateAjoutMovie = model.movie.DateAjoutMovie,
+ImageFile = photo.FileName,
+};
+_db.Add(movie);
+_db.SaveChanges();
+
+return RedirectToAction(nameof(Index));
+}
+catch (Exception)
+{
+throw;
+}
+}
     }
 }
