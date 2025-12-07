@@ -132,5 +132,36 @@ catch (Exception)
 throw;
 }
 }
+public IActionResult TestAudit()
+{
+    // --- 1. Ajouter un film ---
+    var movie = new Movie
+    {
+        Name = "Test Movie",
+        DateAjoutMovie = DateTime.UtcNow,
+        ImageFile = "test.jpg",
+        GenreId = 1
+    };
+    _db.Movies.Add(movie);
+    _db.SaveChanges(); // <-- AuditLog déclenché
+
+    // --- 2. Modifier le film ---
+    movie.Name = "Test Movie Updated";
+    _db.Movies.Update(movie);
+    _db.SaveChanges(); // <-- AuditLog enregistré
+
+    // --- 3. Supprimer le film ---
+    _db.Movies.Remove(movie);
+    _db.SaveChanges(); // <-- AuditLog enregistré
+
+    // --- 4. Lire les logs ---
+    var logs = _db.AuditLogs
+        .OrderByDescending(a => a.Date)
+        .Take(10)
+        .ToList();
+
+    return View("AuditLogs", logs); // renvoie à une vue AuditLogs
+}
+
     }
 }

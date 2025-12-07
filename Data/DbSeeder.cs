@@ -36,13 +36,14 @@ namespace WebApplication1.Data
                 new MembershipType { Id = 4, SignUpFee = 150, DurationInMonth = "1 Year", DiscountRate = 25 }
             );
             // Seed Customers
-            modelBuilder.Entity<Customer>().HasData(
-                new Customer { Id = 1, Name = "Alice Dupont", MembershipTypeId = 1 },
-                new Customer { Id = 2, Name = "Karim Ben Ali", MembershipTypeId = 2 },
-                new Customer { Id = 3, Name = "Sophie Martin", MembershipTypeId = 3 },
-                new Customer { Id = 4, Name = "Amine Trabelsi", MembershipTypeId = 4 },
-                new Customer { Id = 5, Name = "Lina Haddad", MembershipTypeId = 2 }
-            );
+          modelBuilder.Entity<Customer>().HasData(
+    new Customer { Id = 1, Name = "Alice Dupont", MembershipTypeId = 1, IsSubscribed = true },
+    new Customer { Id = 2, Name = "Karim Ben Ali", MembershipTypeId = 2, IsSubscribed = false },
+    new Customer { Id = 3, Name = "Sophie Martin", MembershipTypeId = 3, IsSubscribed = true },
+    new Customer { Id = 4, Name = "Amine Trabelsi", MembershipTypeId = 4, IsSubscribed = false },
+    new Customer { Id = 5, Name = "Lina Haddad", MembershipTypeId = 2, IsSubscribed = true }
+);
+
         }
     }
 }

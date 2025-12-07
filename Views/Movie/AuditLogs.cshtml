@@ -1,0 +1,31 @@
+@model IEnumerable<WebApplication1.Models.AuditLog>
+
+@{
+    ViewData["Title"] = "Audit Logs";
+}
+
+<h2>Audit Logs</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Table</th>
+            <th>Action</th>
+            <th>Entity Key</th>
+            <th>Changes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>@log.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@log.TableName</td>
+                <td>@log.Action</td>
+                <td>@log.EntityKey</td>
+                <td>@log.Changes</td>
+            </tr>
+        }
+    </tbody>
+</table>

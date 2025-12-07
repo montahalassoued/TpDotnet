@@ -7,6 +7,7 @@ namespace WebApplication1.Models
 
         // Relation 1 - Many avec MembershipType
         public int MembershipTypeId { get; set; }
+        public bool IsSubscribed { get; set; }
         public MembershipType? MembershipType { get; set; }
         public List<Movie>? Movies { get; set; }
     }

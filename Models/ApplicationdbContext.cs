@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<MembershipType> MembershipTypes { get; set; }
+    public DbSet<AuditLog> AuditLogs { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
