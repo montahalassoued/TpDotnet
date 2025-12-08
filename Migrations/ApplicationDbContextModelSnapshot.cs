@@ -250,6 +250,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 1,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 4,
                             ImageFile = "inception.jpeg",
                             Name = "Inception"
@@ -257,6 +258,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 2,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 2,
                             ImageFile = "jurassic.jpeg",
                             Name = "Jurassic World"
@@ -264,6 +266,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 3,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 1,
                             ImageFile = "91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg",
                             Name = "Bella"
@@ -271,6 +274,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 4,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 1,
                             ImageFile = "pridePrejudice.jpeg",
                             Name = "Pride and Prejudice"
@@ -278,6 +282,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 5,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 4,
                             ImageFile = "matrix.jpeg",
                             Name = "The Matrix"
@@ -285,6 +290,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 6,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 2,
                             ImageFile = "hangover.jpeg",
                             Name = "The Hangover"
@@ -292,6 +298,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 7,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 3,
                             ImageFile = "it.jpeg",
                             Name = "It"
@@ -299,6 +306,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 8,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 1,
                             ImageFile = "titanic.jpeg",
                             Name = "Titanic"
@@ -306,6 +314,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 9,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 4,
                             ImageFile = "endgame.jpeg",
                             Name = "Avengers: Endgame"
@@ -313,6 +322,7 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 10,
+                            DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             GenreId = 2,
                             ImageFile = "jumanji.jpeg",
                             Name = "Jumanji"

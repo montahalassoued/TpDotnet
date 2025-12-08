@@ -49,20 +49,26 @@ namespace WebApplication1.Controllers
     // POST: /Movie/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-   public IActionResult Edit(int id, Movie movie, IFormFile? imageFile)
+    public IActionResult Edit(int id, Movie movie, IFormFile? photo)
+    {
+        if (id != movie.Id)
         {
-            if (id != movie.Id)
-                return BadRequest();
+            return NotFound();
+        }
 
-            if (ModelState.IsValid)
+        if (ModelState.IsValid)
+        {
+            if (movie.DateAjoutMovie.HasValue)
             {
-                _movieService.UpdateMovie(movie, imageFile);
-                return RedirectToAction("Index"); // ou vers la page de détails
+                movie.DateAjoutMovie = DateTime.SpecifyKind(movie.DateAjoutMovie.Value, DateTimeKind.Utc);
             }
 
-            // Si le model est invalide, revenir à la vue avec le model
-            return View(movie);
+            _movieService.UpdateMovie(movie, photo);
+            return RedirectToAction(nameof(Index));
         }
+        ViewData["Genres"] = new SelectList(_movieService.GetAllGenres(), "Id", "Name", movie.GenreId);
+        return View(movie);
+    }
 
 // GET: /Movie/Delete/5
        public IActionResult Delete(int id)

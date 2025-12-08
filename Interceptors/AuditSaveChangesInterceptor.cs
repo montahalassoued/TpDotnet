@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication1.Models;
 public class AuditSaveChangesInterceptor : SaveChangesInterceptor
 {
-    public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
+    public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         var context = eventData.Context;
-        if (context == null) return result;
+        if (context == null) return base.SavingChanges(eventData, result);
 
         var auditEntries = new List<AuditLog>();
 
@@ -15,14 +15,20 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
             if (entry.Entity is AuditLog || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                 continue;
 
+            var changes = string.Join(", ", entry.Properties
+                .Where(p => p.IsModified)
+                .Select(p => $"{p.Metadata.Name}: {p.OriginalValue} -> {p.CurrentValue}"));
+
+            if (entry.State == EntityState.Modified && string.IsNullOrEmpty(changes))
+                continue; 
+
             var audit = new AuditLog
             {
                 TableName = entry.Entity.GetType().Name,
                 Action = entry.State.ToString(),
                 EntityKey = entry.Properties.First(p => p.Metadata.IsPrimaryKey()).CurrentValue?.ToString() ?? "",
-                Changes = string.Join(", ", entry.Properties
-                    .Where(p => p.IsModified)
-                    .Select(p => $"{p.Metadata.Name}: {p.OriginalValue} -> {p.CurrentValue}"))
+                Changes = changes,
+                Date = DateTime.UtcNow
             };
 
             auditEntries.Add(audit);
@@ -31,9 +37,9 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
         if (auditEntries.Any())
         {
             context.AddRange(auditEntries);
-            context.SaveChanges(false);
+            
         }
 
-        return result;
+        return base.SavingChanges(eventData, result);
     }
 }

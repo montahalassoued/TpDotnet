@@ -30,22 +30,26 @@ namespace WebApplication1.Services
             .FirstOrDefault(m => m.Id == id);
         }
         public void UpdateMovie(Movie movie, IFormFile? imageFile = null)
+{
+    var dbMovie = _db.Movies.FirstOrDefault(m => m.Id == movie.Id);
+    if (dbMovie == null) return;
+
+    if (imageFile != null && imageFile.Length > 0)
+    {
+        var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+        using (var stream = new FileStream(filePath, FileMode.Create))
         {
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.CopyTo(stream);
-                }
-
-                movie.ImageFile = fileName;
-            }
-
-            _db.Movies.Update(movie);
-            _db.SaveChanges();
+            imageFile.CopyTo(stream);
         }
+
+        dbMovie.ImageFile = fileName; 
+    }
+    dbMovie.Name = movie.Name;
+    dbMovie.Genre = movie.Genre;
+    dbMovie.DateAjoutMovie= movie.DateAjoutMovie;
+    _db.SaveChanges();
+}
 
 
         public void DeleteMovie(Movie movie)

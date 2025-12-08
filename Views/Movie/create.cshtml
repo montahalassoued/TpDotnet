@@ -1,51 +1,57 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebApplication1.Models.MovieVM
 
-<div class="flex flex-col items-center justify-center mt-8 px-4 bg-gray-50 min-h-screen">
-    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center w-full">Create New Movie</h2>
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4">🎬 Create New Movie</h2>
 
-    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            @Html.AntiForgeryToken()
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
 
-            <!-- Back to List -->
-            <div class="mb-4">
-                <a asp-action="Index" class="text-gray-700 underline text-sm">&larr; Back to List</a>
-            </div>
+                <!-- Back to List -->
+                <div class="mb-3">
+                    <a asp-action="Index" class="text-decoration-underline">&larr; Back to List</a>
+                </div>
 
-            <!-- Movie Name -->
-            <div class="mb-4">
-                <label asp-for="movie.Name" class="block text-sm font-medium text-gray-700">Name</label>
-                <input asp-for="movie.Name" placeholder="Enter Movie name" 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" />
-                <span asp-validation-for="movie.Name" class="text-red-500 text-sm"></span>
-            </div>
+                <!-- Movie Name -->
+                <div class="mb-3">
+                    <label asp-for="movie.Name" class="form-label">Name</label>
+                    <input asp-for="movie.Name" placeholder="Enter Movie name" class="form-control" />
+                    <span asp-validation-for="movie.Name" class="text-danger small"></span>
+                </div>
 
-            <!-- Movie Added Date -->
-            <div class="mb-4">
-                <label asp-for="movie.DateAjoutMovie" class="block text-sm font-medium text-gray-700">Movie Added</label>
-                <input asp-for="movie.DateAjoutMovie" type="datetime-local"
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" />
-                <span asp-validation-for="movie.DateAjoutMovie" class="text-red-500 text-sm"></span>
-            </div>
+                <!-- Movie Added Date -->
+                <div class="mb-3">
+                    <label asp-for="movie.DateAjoutMovie" class="form-label">Movie Added</label>
+                    <input asp-for="movie.DateAjoutMovie" type="datetime-local" class="form-control" />
+                    <span asp-validation-for="movie.DateAjoutMovie" class="text-danger small"></span>
+                </div>
 
-            <!-- Photo Upload -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Photo</label>
-                <input type="file" name="photo" class="mt-1 block w-full text-gray-700" />
-                <p class="text-sm text-gray-500 mt-1">aucun fichier sélectionné</p>
-            </div>
-            //movie genre
-         <select asp-for="movie.GenreId" asp-items="@(ViewData["Genres"] as SelectList)">
-         <option value="">-- Select Genre --</option>
-         </select>
+                <!-- Photo Upload -->
+                <div class="mb-3">
+                    <label class="form-label">Photo</label>
+                    <input type="file" name="photo" class="form-control" />
+                    <div class="form-text">No file selected. Max size: 2MB</div>
+                </div>
 
-            <!-- Buttons -->
-            <div class="flex justify-end gap-2 mt-6">
-                <a asp-action="Index" class="px-4 py-2 rounded-md bg-gray-300 text-gray-800 font-medium text-sm">Back To List</a>
-                <button type="submit" class="px-4 py-2 rounded-md bg-indigo-600 text-white font-medium text-sm">Save Info</button>
-            </div>
-        </form>
+                <!-- Movie Genre -->
+                <div class="mb-3">
+                    <label asp-for="movie.GenreId" class="form-label">Genre</label>
+                    <select asp-for="movie.GenreId" asp-items="@(ViewData["Genres"] as SelectList)" class="form-select">
+                        <option value="">-- Select Genre --</option>
+                    </select>
+                    <span asp-validation-for="movie.GenreId" class="text-danger small"></span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">Back To List</a>
+                    <button type="submit" class="btn btn-primary">Save Info</button>
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>
 

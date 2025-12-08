@@ -16,18 +16,21 @@ namespace WebApplication1.Data
             );
 
             // Seed Movies
-         modelBuilder.Entity<Movie>().HasData(
-            new Movie { Id = 1, Name = "Inception", ImageFile = "inception.jpeg", GenreId = 4 },
-            new Movie { Id = 2, Name = "Jurassic World", ImageFile = "jurassic.jpeg", GenreId = 2 },
-            new Movie { Id = 3, Name = "Bella", ImageFile = "91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg", GenreId = 1 },
-            new Movie { Id = 4, Name = "Pride and Prejudice", ImageFile = "pridePrejudice.jpeg", GenreId = 1 },
-            new Movie { Id = 5, Name = "The Matrix", ImageFile = "matrix.jpeg", GenreId = 4 },
-            new Movie { Id = 6, Name = "The Hangover", ImageFile = "hangover.jpeg", GenreId = 2 },
-            new Movie { Id = 7, Name = "It", ImageFile = "it.jpeg", GenreId = 3 },
-            new Movie { Id = 8, Name = "Titanic", ImageFile = "titanic.jpeg", GenreId = 1 },
-            new Movie { Id = 9, Name = "Avengers: Endgame", ImageFile = "endgame.jpeg", GenreId = 4 },
-            new Movie { Id = 10, Name = "Jumanji", ImageFile = "jumanji.jpeg", GenreId = 2 }
-            );
+modelBuilder.Entity<Movie>().HasData(
+    new Movie { Id = 1, Name = "Inception", ImageFile = "inception.jpeg", GenreId = 4, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 2, Name = "Jurassic World", ImageFile = "jurassic.jpeg", GenreId = 2, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 3, Name = "Bella", ImageFile = "91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg", GenreId = 1, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 4, Name = "Pride and Prejudice", ImageFile = "pridePrejudice.jpeg", GenreId = 1, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 5, Name = "The Matrix", ImageFile = "matrix.jpeg", GenreId = 4, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 6, Name = "The Hangover", ImageFile = "hangover.jpeg", GenreId = 2, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 7, Name = "It", ImageFile = "it.jpeg", GenreId = 3, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 8, Name = "Titanic", ImageFile = "titanic.jpeg", GenreId = 1, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 9, Name = "Avengers: Endgame", ImageFile = "endgame.jpeg", GenreId = 4, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) },
+    new Movie { Id = 10, Name = "Jumanji", ImageFile = "jumanji.jpeg", GenreId = 2, DateAjoutMovie = new DateTime(2025, 12, 8, 0, 0, 0, DateTimeKind.Utc) }
+);
+
+
+
 
             //Seed MembershipTypes
             modelBuilder.Entity<MembershipType>().HasData(

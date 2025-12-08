@@ -1,75 +1,63 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebApplication1.Models.Movie
 
-<div class="min-h-screen bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center justify-start py-12 px-6">
-    <div class="w-full max-w-6xl bg-white rounded-xl p-10 border border-gray-200">
-        <h2 class="text-4xl font-bold text-center text-indigo-700 mb-10">🎬 Edit Movie</h2>
+<div class="container py-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 900px;">
+        <div class="card-body">
+            <h2 class="card-title text-center text-primary mb-4">🎬 Edit Movie</h2>
 
-        <form asp-action="Edit" asp-controller="Movie" method="post" enctype="multipart/form-data" class="flex flex-col lg:flex-row gap-10 items-start">
-            <input type="hidden" asp-for="Id" />
+            <form asp-action="Edit" asp-controller="Movie" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
 
-            <!-- Left side: current image -->
-            <div class="flex-shrink-0">
-         <img src="@(string.IsNullOrEmpty(Model.ImageFile) ? "/images/placeholder.png" : "/images/" + Model.ImageFile)" 
-     alt="@Model.Name" 
-     class="w-32 h-auto object-cover rounded-lg" />
+                <div class="row g-4">
+                    <!-- Left side: current image -->
+                    <div class="col-md-4 text-center">
+                        <img src="@(string.IsNullOrEmpty(Model.ImageFile) ? "/images/placeholder.png" : "/images/" + Model.ImageFile)" 
+                             alt="@Model.Name" 
+                             class="img-fluid rounded mb-3" />
+                    </div>
 
-            
-            </div>
+                    <!-- Right side: form inputs -->
+                    <div class="col-md-8">
+                        <!-- Movie Name -->
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Movie Name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
 
-            <!-- Right side: form inputs -->
-            <div class="flex-1 flex flex-col space-y-6">
-                <!-- Movie Name -->
-                <div>
-                    <label asp-for="Name" class="block text-gray-700 font-semibold mb-2">Movie Name</label>
-                    <input asp-for="Name" 
-                           class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
-                    <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+                        <!-- Genre -->
+                        <div class="mb-3">
+                            <label asp-for="GenreId" class="form-label">Genre</label>
+                            <select asp-for="GenreId" asp-items="ViewBag.Genres" class="form-select">
+                                <option value="">-- Select Genre --</option>
+                            </select>
+                            <span asp-validation-for="GenreId" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Upload Image -->
+                        <div class="mb-3">
+                            <label class="form-label">Upload New Image</label>
+                            <input type="file" name="ImageFile" class="form-control" />
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-3">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Genre -->
-                <div>
-                    <label asp-for="GenreId" class="block text-gray-700 font-semibold mb-2">Genre</label>
-                    <select asp-for="GenreId" asp-items="ViewBag.Genres" 
-                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-indigo-400 transition">
-                        <option value="">-- Select Genre --</option>
-                    </select>
-                    <span asp-validation-for="GenreId" class="text-red-500 text-sm"></span>
-                </div>
-
-                <!-- Upload Image -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-2">Upload New Image</label>
-                    <input type="file" name="ImageFile" 
-                           class="border border-gray-300 rounded-md px-3 py-2 w-full  focus:ring-2 focus:ring-indigo-400 transition" />
-                </div>
-
-                <!-- Buttons -->
-                <div class="flex flex-col sm:flex-row justify-start gap-4 pt-6">
-                    <a asp-action="Index" 
-                       class="px-6 py-3 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition font-medium text-center">
-                        Cancel
-                    </a>
-                    <button type="submit" 
-                            class="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition font-medium text-center">
-                        Save Changes
-                    </button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
 <style>
-/* Inputs */
-input, select { font-size: 1rem; }
-
-/* Buttons */
-a, button { min-width: 120px; text-align: center; }
-
-
-</style>
+    .card-title {
+        font-size: 2rem;
+        font-weight: 700;
+    }
