@@ -45,9 +45,11 @@ namespace WebApplication1.Services
 
         dbMovie.ImageFile = fileName; 
     }
+
     dbMovie.Name = movie.Name;
-    dbMovie.Genre = movie.Genre;
-    dbMovie.DateAjoutMovie= movie.DateAjoutMovie;
+    dbMovie.GenreId = movie.GenreId; 
+    dbMovie.DateAjoutMovie = movie.DateAjoutMovie;
+
     _db.SaveChanges();
 }
 

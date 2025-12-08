@@ -1,10 +1,25 @@
 @model WebApplication1.Models.Customer
 
-<h2>Confirmer la suppression</h2>
-<p>Voulez-vous vraiment supprimer le customer <strong>@Model.Name</strong> ?</p>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg rounded-4 border">
+                <div class="card-body p-4 text-center">
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Supprimer</button>
-    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
-</form>
+                    <h2 class="card-title text-danger mb-3">❌ Confirmr the delete</h2>
+                    <p class="mb-4">
+                        D you want to delete the Movie
+                        <strong>@Model.Name</strong> ?
+                    </p>
+
+                    <form asp-action="Delete" method="post" class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                        <input type="hidden" asp-for="Id" />
+                        <button type="submit" class="btn btn-danger btn-lg w-100 w-sm-auto">Supprimer</button>
+                        <a asp-action="Index" class="btn btn-secondary btn-lg w-100 w-sm-auto">Annuler</a>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

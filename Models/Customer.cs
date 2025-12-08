@@ -5,7 +5,6 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        // Relation 1 - Many avec MembershipType
         public int MembershipTypeId { get; set; }
         public bool IsSubscribed { get; set; }
         public MembershipType? MembershipType { get; set; }
