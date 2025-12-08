@@ -27,10 +27,9 @@
                         <!-- Movie Image -->
                         <td class="px-1 py-1 text-center">
                             <div class="w-12 h-15 mx-auto overflow-hidden rounded-md">
-                                <img src="@(!string.IsNullOrEmpty(movie.ImageUrl) ? movie.ImageUrl : "/images/placeholder.png")"
-                                     alt="@movie.Name"
-                                     class="w-full h-full object-cover" />
-                            </div>
+                                <img src="@(!string.IsNullOrEmpty(movie.ImageFile) ? "/images/" + movie.ImageFile : "/images/placeholder.png")"
+                                alt="@movie.Name" class="w-full h-full object-cover" />
+                                </div>
                         </td>
 
                         <td class="px-1 py-1 text-center h-19">@movie.Name</td>

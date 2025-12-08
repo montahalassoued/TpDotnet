@@ -1,8 +1,7 @@
 using WebApplication1.Models;
 using WebApplication1.Helpers;
-using WebApplication1.Services;
-using WebApplication1.Data;
 using Microsoft.EntityFrameworkCore;
+
 namespace WebApplication1.Services
 
 
@@ -10,35 +9,72 @@ namespace WebApplication1.Services
     public class MovieService : IMovieService
     {
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MovieService(ApplicationDbContext db)
+
+        public MovieService(IWebHostEnvironment webHostEnvironment,ApplicationDbContext db)
         {
+            _webHostEnvironment = webHostEnvironment;
             _db = db;
         }
         public async Task<PaginatedList<Movie>> GetMoviesPaginatedAsync(int pageNumber, int pageSize)
         {
-            var query = _db.Movies
-            .Include(m => m.Genre)
-            .OrderBy(m => m.Id)
-            .AsNoTracking();
-            return await PaginatedList<Movie>.CreateAsync(query, pageNumber, pageSize);
-        }
-        public async Task<Movie> GetMovieByIdAsync(int id)
-        {
-            return await _db.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
-        }
-        public async Task AddMovieAsync(Movie movie)
-        {
-            _db.Movies.Add(movie);
-            await _db.SaveChangesAsync();
-        }
-        public async Task UpdateMovieAsync(Movie movie)
-        {
-            _db.Movies.Update(movie);
-            await _db.SaveChangesAsync();
-        }
-        
+            var query = _db.Movies.Include(m => m.Genre).OrderBy(m => m.Id).AsNoTracking();
+            return await PaginatedList<Movie>.CreateAsync(query, pageNumber, pageSize); 
+            }
 
+
+        public Movie GetMovieById(int id)
+        {
+            return  _db.Movies.Include(m => m.Genre)
+            .FirstOrDefault(m => m.Id == id);
+        }
+        public void UpdateMovie(Movie movie, IFormFile? imageFile = null)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(stream);
+                }
+
+                movie.ImageFile = fileName;
+            }
+
+            _db.Movies.Update(movie);
+            _db.SaveChanges();
+        }
+
+
+        public void DeleteMovie(Movie movie)
+        {
+            _db.Movies.Remove(movie);
+            _db.SaveChanges();
+        }
+
+        public void AddMovie(Movie movie, IFormFile? imageFile = null)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(stream);
+                }
+
+                movie.ImageFile = fileName;
+            }
+
+            _db.Movies.Add(movie);
+            _db.SaveChanges();
+        }
+        public IEnumerable<Genre> GetAllGenres()
+        {
+            return _db.Genres.ToList();
+        }
 
         public IEnumerable<Movie> GetActionMovies()
         {
@@ -49,7 +85,7 @@ namespace WebApplication1.Services
 
         public IEnumerable<Movie> GetMoviesOrdered()
         {
-            return _db.Movies
+            return  _db.Movies
                 .OrderBy(m => m.DateAjoutMovie)
                 .ThenBy(m => m.Name)
                 .ToList();

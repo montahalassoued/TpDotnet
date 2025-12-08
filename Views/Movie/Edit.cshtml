@@ -10,9 +10,11 @@
 
             <!-- Left side: current image -->
             <div class="flex-shrink-0">
-                <img src="@(!string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/images/placeholder.png")" 
-                     alt="@Model.Name" 
-                     class="w-64 h-80 object-cover rounded-lg border border-gray-300 shadow" />
+         <img src="@(string.IsNullOrEmpty(Model.ImageFile) ? "/images/placeholder.png" : "/images/" + Model.ImageFile)" 
+     alt="@Model.Name" 
+     class="w-32 h-auto object-cover rounded-lg" />
+
+            
             </div>
 
             <!-- Right side: form inputs -->

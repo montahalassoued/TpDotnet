@@ -30,8 +30,8 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
 
         if (auditEntries.Any())
         {
-            context.Set<AuditLog>().AddRange(auditEntries);
-            context.SaveChanges();
+            context.AddRange(auditEntries);
+            context.SaveChanges(false);
         }
 
         return result;

@@ -237,9 +237,6 @@ namespace WebApplication1.Migrations
                     b.Property<string>("ImageFile")
                         .HasColumnType("text");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -254,70 +251,70 @@ namespace WebApplication1.Migrations
                         {
                             Id = 1,
                             GenreId = 4,
-                            ImageUrl = "/images/inception.jpeg",
+                            ImageFile = "inception.jpeg",
                             Name = "Inception"
                         },
                         new
                         {
                             Id = 2,
                             GenreId = 2,
-                            ImageUrl = "/images/jurassic.jpeg ",
+                            ImageFile = "jurassic.jpeg",
                             Name = "Jurassic World"
                         },
                         new
                         {
                             Id = 3,
                             GenreId = 1,
-                            ImageUrl = "/images/91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg",
+                            ImageFile = "91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg",
                             Name = "Bella"
                         },
                         new
                         {
                             Id = 4,
                             GenreId = 1,
-                            ImageUrl = "/images/pridePrejudice.jpeg",
+                            ImageFile = "pridePrejudice.jpeg",
                             Name = "Pride and Prejudice"
                         },
                         new
                         {
                             Id = 5,
                             GenreId = 4,
-                            ImageUrl = "/images/matrix.jpeg",
+                            ImageFile = "matrix.jpeg",
                             Name = "The Matrix"
                         },
                         new
                         {
                             Id = 6,
                             GenreId = 2,
-                            ImageUrl = "/images/hangover.jpeg",
+                            ImageFile = "hangover.jpeg",
                             Name = "The Hangover"
                         },
                         new
                         {
                             Id = 7,
                             GenreId = 3,
-                            ImageUrl = "/images/it.jpeg",
+                            ImageFile = "it.jpeg",
                             Name = "It"
                         },
                         new
                         {
                             Id = 8,
                             GenreId = 1,
-                            ImageUrl = "/images/titanic.jpeg",
+                            ImageFile = "titanic.jpeg",
                             Name = "Titanic"
                         },
                         new
                         {
                             Id = 9,
                             GenreId = 4,
-                            ImageUrl = "/images/endgame.jpeg",
+                            ImageFile = "endgame.jpeg",
                             Name = "Avengers: Endgame"
                         },
                         new
                         {
                             Id = 10,
                             GenreId = 2,
-                            ImageUrl = "/images/jumanji.jpeg",
+                            ImageFile = "jumanji.jpeg",
                             Name = "Jumanji"
                         });
                 });

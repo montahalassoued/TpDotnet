@@ -16,18 +16,19 @@ namespace WebApplication1.Data
             );
 
             // Seed Movies
-            modelBuilder.Entity<Movie>().HasData(
-                new Movie { Id = 1, Name = "Inception", ImageUrl = "/images/inception.jpeg", GenreId = 4 },
-                new Movie { Id = 2, Name = "Jurassic World", ImageUrl = "/images/jurassic.jpeg ", GenreId = 2 },
-                new Movie { Id = 3, Name = "Bella", ImageUrl = "/images/91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg", GenreId = 1 },
-                new Movie { Id = 4, Name = "Pride and Prejudice", ImageUrl = "/images/pridePrejudice.jpeg", GenreId = 1 },
-                new Movie { Id = 5, Name = "The Matrix", ImageUrl = "/images/matrix.jpeg", GenreId = 4 },
-                new Movie { Id = 6, Name = "The Hangover", ImageUrl = "/images/hangover.jpeg", GenreId = 2 },
-                new Movie { Id = 7, Name = "It", ImageUrl = "/images/it.jpeg", GenreId = 3 },
-                new Movie { Id = 8, Name = "Titanic", ImageUrl = "/images/titanic.jpeg", GenreId = 1 },
-                new Movie { Id = 9, Name = "Avengers: Endgame", ImageUrl = "/images/endgame.jpeg", GenreId = 4 },
-                new Movie { Id = 10, Name = "Jumanji", ImageUrl = "/images/jumanji.jpeg", GenreId = 2 }
+         modelBuilder.Entity<Movie>().HasData(
+            new Movie { Id = 1, Name = "Inception", ImageFile = "inception.jpeg", GenreId = 4 },
+            new Movie { Id = 2, Name = "Jurassic World", ImageFile = "jurassic.jpeg", GenreId = 2 },
+            new Movie { Id = 3, Name = "Bella", ImageFile = "91qMS2JSdhL._AC_UF1000,1000_QL80_.jpg", GenreId = 1 },
+            new Movie { Id = 4, Name = "Pride and Prejudice", ImageFile = "pridePrejudice.jpeg", GenreId = 1 },
+            new Movie { Id = 5, Name = "The Matrix", ImageFile = "matrix.jpeg", GenreId = 4 },
+            new Movie { Id = 6, Name = "The Hangover", ImageFile = "hangover.jpeg", GenreId = 2 },
+            new Movie { Id = 7, Name = "It", ImageFile = "it.jpeg", GenreId = 3 },
+            new Movie { Id = 8, Name = "Titanic", ImageFile = "titanic.jpeg", GenreId = 1 },
+            new Movie { Id = 9, Name = "Avengers: Endgame", ImageFile = "endgame.jpeg", GenreId = 4 },
+            new Movie { Id = 10, Name = "Jumanji", ImageFile = "jumanji.jpeg", GenreId = 2 }
             );
+
             //Seed MembershipTypes
             modelBuilder.Entity<MembershipType>().HasData(
                 new MembershipType { Id = 1, SignUpFee = 0, DurationInMonth = "1 Month", DiscountRate = 0 },

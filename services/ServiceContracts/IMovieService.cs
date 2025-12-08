@@ -5,12 +5,14 @@ namespace WebApplication1.Services
 {
     public interface IMovieService
     {
-        Task<PaginatedList<Movie>> GetMoviesPaginatedAsync(int pageNumber, int pageSize);
-        Task<Movie> GetMovieByIdAsync(int id);
-        Task AddMovieAsync(Movie movie);
-        Task UpdateMovieAsync(Movie movie);
-        Task DeleteMovieAsync(Movie movie);
-        IEnumerable<Movie> GetActionMovies();
-        IEnumerable<Movie> GetMoviesOrdered();
+   Task<PaginatedList<Movie>> GetMoviesPaginatedAsync(int pageNumber, int pageSize);
+
+    Movie GetMovieById(int id);
+    void UpdateMovie(Movie movie,IFormFile photo);
+    void DeleteMovie(Movie movie);
+    public IEnumerable<Genre> GetAllGenres();
+    public void AddMovie(Movie movie, IFormFile photo);
+    IEnumerable<Movie> GetActionMovies();
+    IEnumerable<Movie> GetMoviesOrdered();
     }
 }

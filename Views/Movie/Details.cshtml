@@ -1,36 +1,93 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebApplication1.Models.Movie
 
-<div class="min-h-screen bg-gray-50 flex items-center justify-center py-10 px-4">
-    <div class="w-full max-w-2xl bg-white rounded-lg p-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Movie Details</h2>
+<div class="min-h-screen bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center justify-start py-12 px-6">
+    <div class="w-full max-w-4xl bg-white rounded-xl p-8 border border-gray-200 shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-indigo-700 mb-8">🎬 Edit Movie</h2>
 
-        <div class="flex flex-col sm:flex-row items-center gap-6 justify-center">
-            <!-- Movie Image -->
+        <form asp-action="Edit" asp-controller="Movie" method="post" enctype="multipart/form-data" class="flex flex-col lg:flex-row gap-8 items-start">
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Left side: current image -->
             <div class="flex-shrink-0">
-                <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/placeholder.png" : Model.ImageUrl)" 
+                <img src="@(string.IsNullOrEmpty(Model.ImageFile) ? "/images/placeholder.png" : "/images/" + Model.ImageFile)" 
                      alt="@Model.Name" 
-                     class="w-30 h-30 object-cover rounded-md border border-gray-300" />
+                     class="w-48 h-64 md:w-64 md:h-80 object-cover rounded-lg border border-gray-300 shadow-sm" />
             </div>
 
-            <!-- Movie Information -->
-            <div class="flex-1 space-y-4">
+            <!-- Right side: form inputs -->
+            <div class="flex-1 flex flex-col space-y-6">
+
+                <!-- Movie Name -->
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-700">Name</h3>
-                    <p class="text-gray-600">@Model.Name</p>
+                    <label asp-for="Name" class="block text-gray-700 font-semibold mb-2">Movie Name</label>
+                    <input asp-for="Name" 
+                           placeholder="Enter movie name"
+                           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+                    <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
                 </div>
 
+                <!-- Genre -->
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-700">Genre</h3>
-                    <p class="text-gray-600">@Model.Genre?.Name</p>
+                    <label asp-for="GenreId" class="block text-gray-700 font-semibold mb-2">Genre</label>
+                    <select asp-for="GenreId" asp-items="ViewBag.Genres"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                        <option value="">-- Select Genre --</option>
+                    </select>
+                    <span asp-validation-for="GenreId" class="text-red-500 text-sm"></span>
                 </div>
+
+                <!-- Upload Image -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Upload New Image</label>
+                    <input type="file" name="ImageFile"
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+                    <p class="text-sm text-gray-500 mt-1">Max size: 2MB</p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex flex-col sm:flex-row justify-start gap-4 pt-4">
+                    <a asp-action="Index" 
+                       class="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition font-medium text-center">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                            class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition font-medium text-center">
+                        Save Changes
+                    </button>
+                </div>
+
             </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="mt-8 flex justify-end space-x-4">
-            <a asp-action="Index" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition">Back</a>
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">Edit</a>
-        </div>
+        </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+/* Inputs */
+input, select {
+    font-size: 1rem;
+}
+
+/* Buttons */
+a, button {
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Form improvements */
+form {
+    gap: 2rem;
+}
+
+/* Responsive for small screens */
+@@media (max-width: 768px) {
+    form {
+        flex-direction: column;
+    }
+}
+</style>
+

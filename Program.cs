@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext >(options =>
 //services personnalisés 
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+
 //controlleurs+views
 builder.Services.AddControllersWithViews();
 

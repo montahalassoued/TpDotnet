@@ -35,6 +35,10 @@
                 <input type="file" name="photo" class="mt-1 block w-full text-gray-700" />
                 <p class="text-sm text-gray-500 mt-1">aucun fichier sélectionné</p>
             </div>
+            //movie genre
+         <select asp-for="movie.GenreId" asp-items="@(ViewData["Genres"] as SelectList)">
+         <option value="">-- Select Genre --</option>
+         </select>
 
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-6">
