@@ -1,147 +1,119 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.Models;
+using WebApplication1.Services;
 using WebApplication1.Helpers;
 
 namespace WebApplication1.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ICustomerService _customerService;
+        private readonly IMembershipService _membershipService;
 
-        public CustomerController(ApplicationDbContext db)
+        public CustomerController(ICustomerService customerService, IMembershipService membershipService)
         {
-            _db = db;
+            _customerService = customerService;
+            _membershipService = membershipService;
         }
 
+        // Liste paginée
         public async Task<IActionResult> Index(int? page)
         {
             int pageSize = 5;
             int pageNumber = page ?? 1;
+            var customers = await _customerService.GetCustomersPaginatedAsync(pageNumber, pageSize);
 
-            var customerQuery = _db.Customers
-                .Include(c => c.MembershipType)
-                .OrderBy(c => c.Id)
-                .AsNoTracking();
 
-            var customers = await PaginatedList<Customer>.CreateAsync(customerQuery, pageNumber, pageSize);
             return View(customers);
         }
-        public IActionResult Details(int id)
-        {
-            var customer = _db.Customers
-                .Include(c => c.MembershipType)
-                .FirstOrDefault(c => c.Id == id);
 
-            if (customer == null)
-                return NotFound();
+        // Détails
+        public async Task<IActionResult> Details(int id)
+        {
+            var customer = await _customerService.GetCustomerByIdAsync(id);
+            if (customer == null) return NotFound();
 
             return View(customer);
         }
 
-        public IActionResult Edit(int id)
+        // Création
+        public async Task<IActionResult> Create()
         {
-            var customer = _db.Customers.FirstOrDefault(c => c.Id == id);
-            if (customer == null)
-                return NotFound();
+            ViewBag.MembershipTypes = new SelectList(await _membershipService.GetAllAsync(), "Id", "DurationInMonth");
+            return View();
+        }
 
-            ViewData["MembershipTypeId"] = new SelectList(
-                _db.MembershipTypes,
-                "Id",
-                "DurationInMonth",
-                customer.MembershipTypeId
-            );
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                await _customerService.AddCustomerAsync(customer);
+                return RedirectToAction(nameof(Index));
+            }
 
+            ViewBag.Errors = ModelState.Values
+                                        .SelectMany(v => v.Errors)
+                                        .Select(e => e.ErrorMessage)
+                                        .ToList();
+
+            ViewBag.MembershipTypes = new SelectList(await _membershipService.GetAllAsync(), "Id", "DurationInMonth", customer.MembershipTypeId);
+            return View(customer);
+        }
+
+        // Edition
+        public async Task<IActionResult> Edit(int id)
+        {
+            var customer = await _customerService.GetCustomerByIdAsync(id);
+            if (customer == null) return NotFound();
+
+            ViewData["MembershipTypeId"] = new SelectList(await _membershipService.GetAllAsync(), "Id", "DurationInMonth", customer.MembershipTypeId);
             return View(customer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Customer customer)
+        public async Task<IActionResult> Edit(int id, Customer customer)
         {
-            if (id != customer.Id)
-                return BadRequest();
+            if (id != customer.Id) return BadRequest();
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _db.Customers.Update(customer);
-                    _db.SaveChanges();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_db.Customers.Any(c => c.Id == customer.Id))
-                        return NotFound();
-                    throw;
-                }
+                await _customerService.UpdateCustomerAsync(customer);
+                return RedirectToAction(nameof(Index));
             }
 
-            ViewData["MembershipTypeId"] = new SelectList(
-                _db.MembershipTypes,
-                "Id",
-                "DurationInMonth",
-                customer.MembershipTypeId
-            );
-
+            ViewData["MembershipTypeId"] = new SelectList(await _membershipService.GetAllAsync(), "Id", "DurationInMonth", customer.MembershipTypeId);
             return View(customer);
         }
 
-        public IActionResult Delete(int id)
+        // Suppression
+        public async Task<IActionResult> Delete(int id)
         {
-            var customer = _db.Customers
-                .Include(c => c.MembershipType)
-                .FirstOrDefault(c => c.Id == id);
-
-            if (customer == null)
-                return NotFound();
+            var customer = await _customerService.GetCustomerByIdAsync(id);
+            if (customer == null) return NotFound();
 
             return View(customer);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = _db.Customers.Find(id);
-            if (customer == null)
-                return NotFound();
+            var customer = await _customerService.GetCustomerByIdAsync(id);
+            if (customer == null) return NotFound();
 
-            _db.Customers.Remove(customer);
-            _db.SaveChanges();
-
+            await _customerService.DeleteCustomerAsync(customer);
             return RedirectToAction(nameof(Index));
         }
 
-    public IActionResult Create()
+        // Méthode spécifique : clients abonnés avec discount > 10%
+        public IActionResult SubscribedWithDiscount()
         {
-            ViewBag.MembershipTypes = new SelectList(_db.MembershipTypes, "Id", "DurationInMonth");
-    return View();
-}
-   [HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Create(Customer customer)
-{
-    if (ModelState.IsValid)
-    {
-        _db.Customers.Add(customer);
-        _db.SaveChanges();
-        return RedirectToAction(nameof(Index));
-    }
-
-    // 
-    ViewBag.Errors = ModelState.Values
-                                .SelectMany(v => v.Errors)
-                                .Select(e => e.ErrorMessage)
-                                .ToList();
-
-    // Recréer le dropdown
-    ViewBag.MembershipTypes = new SelectList(_db.MembershipTypes, "Id", "DurationInMonth", customer.MembershipTypeId);
-    return View(customer);
-}
-
+            var customers = _customerService.GetSubscribedCustomersWithDiscount();
+            return View(customers);
+        }
     }
 }
-

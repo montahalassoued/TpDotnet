@@ -1,0 +1,42 @@
+@model WebApplication1.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Customer Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Subscribed</dt>
+                <dd class="col-sm-9">@(Model.IsSubscribed ? "Yes" : "No")</dd>
+
+                <dt class="col-sm-3">Membership Type</dt>
+                <dd class="col-sm-9">@Model.MembershipType?.DurationInMonth ?? </dd>
+            </dl>
+
+            @if (Model.Movies != null && Model.Movies.Any())
+            {
+                <h5 class="mt-3">Movies</h5>
+                <ul class="list-group mb-3">
+                    @foreach (var movie in Model.Movies)
+                    {
+                        <li class="list-group-item">@movie.Name</li>
+                    }
+                </ul>
+            }
+
+            <a class="btn btn-primary" href="@Url.Action("Index")">Back to List</a>
+            <a class="btn btn-warning" href="@Url.Action("Edit", new { id = Model.Id })">Edit</a>
+            <a class="btn btn-danger" href="@Url.Action("Delete", new { id = Model.Id })">Delete</a>
+        </div>
+    </div>
+</div>

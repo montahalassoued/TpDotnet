@@ -2,21 +2,25 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using WebApplication1.Services;
-
+using WebApplication1.Repositories.GenericRepo;
+using WebApplication1.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext >(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
     .AddInterceptors(new AuditSaveChangesInterceptor())
 );
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 
 //services personnalisés 
+builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerService,CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 
 //controlleurs+views
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
