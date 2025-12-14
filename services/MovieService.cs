@@ -30,7 +30,7 @@ namespace WebApplication1.Services
             .FirstOrDefault(m => m.Id == id);
         }
         public void UpdateMovie(Movie movie, IFormFile? imageFile = null)
-{
+        {
     var dbMovie = _db.Movies.FirstOrDefault(m => m.Id == movie.Id);
     if (dbMovie == null) return;
 
@@ -101,5 +101,52 @@ namespace WebApplication1.Services
         {
             return _db.Movies.Count();
         }
+        public async Task<List<Movie>> GetActionMoviesInStockAsync()
+        {
+            return await _db.Movies
+            .Include(m => m.Genre)
+            .Where(m => m.Genre.Name == "Action" && m.Stock > 0)
+            .ToListAsync();
+        }
+        public async Task<List<Movie>> GetMoviesOrderedAsync()
+        {
+            return await _db.Movies
+            .OrderBy(m => m.DateAjoutMovie)
+            .ThenBy(m => m.Name)
+            .ToListAsync();
+            }
+        public async Task<int> GetTotalMoviesCountAsync()
+        {
+            return await _db.Movies.CountAsync();
     }
+    public async Task<List<Customer>> GetSubscribedCustomersWithDiscountAsync()
+    {
+        return await _db.Customers
+        .Include(c => c.MembershipType)
+        .Where(c => c.IsSubscribed && c.MembershipType.DiscountRate > 10)
+        .ToListAsync();
+        }
+    public async Task<List<string>> GetMoviesWithGenresAsync()
+    {
+        var query = from m in _db.Movies
+                join g in _db.Genres on m.GenreId equals g.Id
+                select $"{m.Name} - {g.Name}";
+
+    return await query.ToListAsync();
+    }
+    public async Task<List<Genre>> GetTop3GenresAsync()
+    {
+        return await _db.Genres
+        .OrderByDescending(g => g.Movies.Count)
+        .Take(3)
+        .ToListAsync();
+    }
+
+
+
+
+
+
+    }
+
 }
