@@ -176,3 +176,10 @@ C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\obj\Debug\net8.0\refint\WebAppli
 C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\obj\Debug\net8.0\WebApplication1.pdb
 C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\obj\Debug\net8.0\WebApplication1.genruntimeconfig.cache
 C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\obj\Debug\net8.0\ref\WebApplication1.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\MONTAHA\Desktop\dotnet\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll

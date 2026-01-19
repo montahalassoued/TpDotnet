@@ -1,0 +1,57 @@
+@page
+@model WebApplication1.Areas.Identity.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Create a New Account</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Email" class="form-label">Email Address</label>
+                            <input asp-for="Input.Email" class="form-control" placeholder="Enter your email" />
+                            <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Password" class="form-label">Password</label>
+                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter a strong password" />
+                            <small class="form-text text-muted">
+                                Password must be at least 6 characters, contain uppercase, lowercase, and digits.
+                            </small>
+                            <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.City" class="form-label">City</label>
+                            <input asp-for="Input.City" class="form-control" placeholder="Enter your city" />
+                            <span asp-validation-for="Input.City" class="text-danger small"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Register</button>
+                    </form>
+
+                    <hr />
+                    <p class="text-center mb-0">
+                        Already have an account?
+                        <a asp-area="Identity" asp-page="/Account/Login" class="text-decoration-none">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

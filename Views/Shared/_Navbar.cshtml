@@ -56,14 +56,22 @@
 
             </ul>
 
-            <!-- Partie droite -->
-            <ul class="navbar-nav">
+            <!-- Partie droite avec authentification -->
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="Privacy">
                         Privacy
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Audit">
+                        Audit Logs
+                    </a>
+                </li>
             </ul>
+
+            <!-- LoginPartial -->
+            @await Html.PartialAsync("LoginPartial")
 
         </div>
     </div>

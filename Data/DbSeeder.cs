@@ -100,9 +100,6 @@ modelBuilder.Entity<Movie>().HasData(
 );
 
 
-
-
-
             //Seed MembershipTypes
             modelBuilder.Entity<MembershipType>().HasData(
                 new MembershipType { Id = 1, SignUpFee = 0, DurationInMonth = "1 Month", DiscountRate = 0 },
@@ -118,6 +115,42 @@ modelBuilder.Entity<Movie>().HasData(
     new Customer { Id = 4, Name = "Amine Trabelsi", MembershipTypeId = 4, IsSubscribed = false },
     new Customer { Id = 5, Name = "Lina Haddad", MembershipTypeId = 2, IsSubscribed = true }
 );
+// --- Seed Produits (nouveauté) ---
+ modelBuilder.Entity<Produit>().HasData(
+                new Produit { Id = 1, Nom = "Ordinateur Portable", Description = "Dell XPS 15, 16GB RAM, 512GB SSD", Prix = 1299.99m, Stock = 10, ImageUrl = "/images/laptop.jpg", DateAjout = new DateTime(2025, 12, 26, 10, 0, 0, DateTimeKind.Utc) },
+                new Produit { Id = 2, Nom = "Souris Sans Fil", Description = "Logitech MX Master 3", Prix = 99.99m, Stock = 50, ImageUrl = "/images/mouse.jpg", DateAjout = new DateTime(2025, 12, 26, 10, 5, 0, DateTimeKind.Utc) },
+                new Produit { Id = 3, Nom = "Clavier Mécanique", Description = "Corsair K95 RGB", Prix = 199.99m, Stock = 25, ImageUrl = "/images/keyboard.jpg", DateAjout = new DateTime(2025, 12, 26, 10, 10, 0, DateTimeKind.Utc) },
+                new Produit { Id = 4, Nom = "Écouteurs Bluetooth", Description = "Sony WH-1000XM4", Prix = 349.99m, Stock = 30, ImageUrl = "/images/headphones.jpg", DateAjout = new DateTime(2025, 12, 26, 10, 15, 0, DateTimeKind.Utc) }
+            );
+     string user1Id = "user-1";
+            string user2Id = "user-2";
+
+            modelBuilder.Entity<PanierParUser>().HasData(
+                new PanierParUser
+                {
+                    Id = 1,
+                    UserID = user1Id,
+                    ProduitId = 1, // Ordinateur Portable
+                    Quantite = 1,
+                    DateAjout = new DateTime(2025, 12, 26, 11, 0, 0, DateTimeKind.Utc)
+                },
+                new PanierParUser
+                {
+                    Id = 2,
+                    UserID = user1Id,
+                    ProduitId = 2, // Souris Sans Fil
+                    Quantite = 2,
+                    DateAjout = new DateTime(2025, 12, 26, 11, 5, 0, DateTimeKind.Utc)
+                },
+                new PanierParUser
+                {
+                    Id = 3,
+                    UserID = user2Id,
+                    ProduitId = 3, // Clavier Mécanique
+                    Quantite = 1,
+                    DateAjout = new DateTime(2025, 12, 26, 11, 10, 0, DateTimeKind.Utc)
+                }
+            );
 
         }
     }
